@@ -1,0 +1,31 @@
+{
+  "purpose": "Reusable video workflow, general animation mechanisms and user-selected default resources",
+  "defaultMusic": {
+    "asset": "music/default-reference.m4a",
+    "assetIncluded": false,
+    "sourceKind": "optional user-provided local music",
+    "missingAssetAction": "Ask for a local file or replacement. No music is downloaded automatically."
+  },
+  "defaultStyle": "cinematic-spatial",
+  "excludes": [
+    "original reference videos",
+    "final productions",
+    "credentials",
+    "node_modules",
+    "runtime caches",
+    "historical project-specific story, scene and model snapshots"
+  ],
+  "animationCore": "animation-core/",
+  "files": [
+    {
+      "path": "animation-core/deterministic-motion.ts",
+      "bytes": 1160,
+      "sha256": "bff67539832b53b2eaf906e041d326d55845c59d28ac345841f715cdefdde078"
+    },
+    {
+      "path": "animation-core/SceneLayer.tsx",
+      "bytes": 1412,
+      "sha256": "5ccc9aba715a955d259e27d28ed5ce919af1b69b932eb14e1538dfe0dbfff375"
+    }
+  ]
+}

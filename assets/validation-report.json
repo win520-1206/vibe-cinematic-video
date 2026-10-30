@@ -1,0 +1,49 @@
+{
+  "skill": "vibe-cinematic-video",
+  "date": "2026-10-30",
+  "formatValidation": "passed with official quick_validate.py using Python UTF-8 mode",
+  "documentLinks": "passed",
+  "audioScript": [
+    "2-second silence/500Hz tone fixture",
+    "60 frame output at30fps",
+    "finite bounded control values",
+    "invalid fps rejected",
+    "actual120s soundtrack yields3600frames",
+    "CLI success and invalid-input exit code verified"
+  ],
+  "mediaScript": [
+    "actual1080p30/120s film metadata passed",
+    "intentionally wrong1280 width rejected",
+    "17s cut maps to frame509 then510"
+  ],
+  "limitations": [
+    "No new full video rendered for Skill validation",
+    "Metadata helper does not fully decode or visually review video",
+    "No independent subagent evaluation performed",
+    "Animation core is a mechanism example, not a turnkey production."
+  ],
+  "revision": "project-neutral-naming",
+  "invocationChecks": [
+    "episodeCount/duration/width/height/fps unset",
+    "no preset title cut or key events",
+    "default music asset present",
+    "extensible style profiles resolve",
+    "current music overrides default"
+  ],
+  "musicStructureTests": [
+    "synthetic120BPM detected",
+    "sustained high-energy fixture located",
+    "silence yields no invented tempo or climax",
+    "actual133s default track decoded and analyzed",
+    "CLI output generated",
+    "all beat/climax outputs labeled candidates, not reviewed musical truth"
+  ],
+  "neutralizationChecks": [
+    "No production-specific names in packaged text or filenames",
+    "Document links resolved",
+    "Config/style registry consistent",
+    "Generic TS/TSX compilation passed",
+    "Two different transition schedules and deterministic geometry tested",
+    "Default music bytes preserved"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 2,
+  "status": "awaiting_user_parameters",
+  "project": {
+    "title": null,
+    "theme": null,
+    "audience": null,
+    "purpose": null,
+    "episodeCount": null
+  },
+  "video": {
+    "width": null,
+    "height": null,
+    "fps": null,
+    "durationSeconds": null,
+    "durationMode": null
+  },
+  "audio": {
+    "required": true,
+    "narration": false,
+    "musicSelection": "default-reference",
+    "userSuppliedMusic": null,
+    "resolvedSource": null,
+    "analysisFile": null,
+    "listeningStatus": "not_reviewed",
+    "cropStartSeconds": null,
+    "cropEndSeconds": null
+  },
+  "style": {
+    "styleId": "cinematic-spatial",
+    "userOverride": null
+  },
+  "keyEvents": [],
+  "output": {
+    "directory": null,
+    "preserveReferenceProject": true
+  },
+  "workflow": {
+    "sampleOrFull": null,
+    "requiredQuestionsAnswered": false
+  }
+}

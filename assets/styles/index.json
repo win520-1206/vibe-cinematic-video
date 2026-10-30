@@ -1,0 +1,11 @@
+{
+  "defaultStyleId": "cinematic-spatial",
+  "styles": [
+    {
+      "id": "cinematic-spatial",
+      "file": "cinematic-spatial.md",
+      "displayName": "Cinematic Spatial"
+    }
+  ],
+  "extensionPolicy": "Append a new unique style id and profile, preserving existing profiles. User may also supply a temporary project-specific override."
+}

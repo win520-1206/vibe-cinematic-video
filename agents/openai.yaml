@@ -1,0 +1,4 @@
+interface:
+  display_name: "vibe-cinematic-video"
+  short_description: "调用时收集题材、集数和时长，默认沿用既有风格与音乐，新曲分析鼓点高潮后适配画面"
+  default_prompt: "使用 $vibe-cinematic-video，先询问本次主题、集数、时长和画幅，默认沿用已有音乐与风格；若我提供新音乐，先分析鼓点、节奏与高潮，再制作适配卡点的科学可视化短剧。"

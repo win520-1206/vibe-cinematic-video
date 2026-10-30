@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 2,
+  "music": {
+    "defaultId": "reference-music",
+    "asset": "music/default-reference.m4a",
+    "kind": "optional local user-supplied soundtrack; public distribution includes no music",
+    "selectionPriority": [
+      "current_user_music",
+      "current_selected_registered_music",
+      "default_asset"
+    ],
+    "missingAssetAction": "Ask user for its location or replacement; do not silently select another song",
+    "assetIncluded": false
+  },
+  "style": {
+    "defaultId": "cinematic-spatial",
+    "registry": "styles/index.json"
+  },
+  "projectParameters": {
+    "episodeCount": null,
+    "durationSeconds": null,
+    "fps": null,
+    "width": null,
+    "height": null,
+    "titleCutSeconds": null
+  },
+  "parameterPolicy": "Ask at invocation for missing project values; never inherit example episode count, duration or cut times"
+}
