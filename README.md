@@ -1,236 +1,270 @@
 # vibe-cinematic-video
 
-让科学过程成为动画，让音乐参与叙事。
+**让科学过程成为动画，让音乐参与叙事。**
 
-一个面向本地编码助手的 **Skill**：将科学主题转化为具有剧情、连续空间运动和声画互动的视频制作流程，覆盖需求问答、资料核验、参考拆解、模型设计、分镜、程序动画、音乐适配、渲染与实际成片验收。
+面向 AI 编码助手的科学可视化视频制作 Skill，结合故事设计、科学模型、连续空间动画与声画互动，覆盖资料核验、参考拆解、分镜、工程制作、渲染与成片验收。
 
-> 本仓库提供 Skill 指令、制作参考、分析脚本和通用动画机制示例。新增可运行Remotion工程模板、项目创建器和检查工具；它仍需要编码助手为具体题材设计故事、模型和镜头，不是一键生成任意成片的软件。
+默认采用 Remotion、React、WebGL 和 Canvas2D；复杂三维镜头可以按需使用 Blender。适合科普短剧、概率与粒子动画、科学原理演示、科技主题系列短片，以及需要加强运镜与音画关系的作品。
 
-## 特点
+[安装](#安装) · [使用](#使用) · [运行示例](#运行示例) · [工程命令](#工程命令) · [技术架构](#技术架构) · [Blender](#可选-blender-镜头) · [安装与分发答疑](#安装与分发答疑)
 
-- **调用时收集参数**：询问主题、受众、用途、集数、时长、画幅与输出规格，不固定某个集数、片长或转场时刻。
-- **连续空间叙事**：通过粒子、透视、对象重组、尺度变化与相机运动呈现过程，而非只给静态页面加入进出场动画。
-- **音乐适配**：从所选音乐中分析瞬态、节奏周期、段落变化和高潮候选，再安排揭示、转场、运动与阅读停留。
-- **模型驱动图形**：科学模型与视觉表现分开，保留公式、单位、模拟边界和资料依据。
-- **可扩展风格**：默认 `cinematic-spatial`，支持增加风格配置和项目级覆盖。
-- **可检查交付**：关注实际导出的视频、音轨、字幕和关键帧，不把源码通过或预览成功当作成片验收。
+## 核心能力
 
-## 适用内容
+| 能力 | 制作方式 |
+| --- | --- |
+| 科学叙事 | 将疑问、冲突和验证写成可见的对象变化，明确每镜要解释的关系 |
+| 连续空间动画 | 通过透视、相机运动、粒子组织与解体、尺度转换和适度泛光组织画面 |
+| 模型驱动图形 | 独立计算样本、概率与曲线，区分教学模拟、真实数据和艺术表达 |
+| 音乐适配 | 分析频段、瞬态、节奏和段落候选，安排揭示、运动与阅读停顿 |
+| 灵活项目配置 | 按本次需求确定集数、各集片长、画幅、帧率、音乐和交付目标 |
+| 独立工程 | 提供项目创建器、依赖锁、预览、局部渲染、整片渲染和打包入口 |
+| 技术验收 | 检查字幕、布局、时间轴、资源、缓存、实际导出帧与音轨 |
 
-科普短剧、科学原理演示、粒子与概率动画、模型驱动的知识短片、科技主题系列视频，以及需要加强空间运动和声画互动的既有作品。
+默认风格 `cinematic-spatial` 使用近黑蓝背景、暖金与冷蓝、连续空间运动和克制光效，以字幕推进叙事。配色、字体、配音与风格可以调整；集数、片长和卡点在调用时确定。
 
-默认视觉为近黑蓝背景、暖金与冷蓝层次、连续空间运动和克制泛光；默认以字幕推进叙事、无机械对白。主题、风格、配音方案与交付形式均可调整。
+Skill 指导编码助手完成制作。具体题材的资料、科学模型、剧情和镜头仍需设计，模板提供稳定的工程基础。
 
-## 快速使用
+## 安装
 
-将本仓库安装到本地 Skills 目录后，在支持该 Skill 的会话中输入：
+### 使用 skills CLI
+
+安装 Node.js 后，在终端运行：
+
+```bash
+npx skills add win520-1206/vibe-cinematic-video --skill vibe-cinematic-video
+```
+
+按提示选择编码助手。默认安装到当前项目，需要跨项目使用时添加 `--global`。例如，为 Codex 安装到用户级目录：
+
+```bash
+npx skills add win520-1206/vibe-cinematic-video --skill vibe-cinematic-video --agent codex --global
+```
+
+只查看仓库中可安装的 Skill：
+
+```bash
+npx skills add win520-1206/vibe-cinematic-video --list
+```
+
+这些命令由 npm 运行 `skills` 安装工具，再从 GitHub 获取本仓库，**不需要发布同名 npm 包**。选项与版本要求以 [skills CLI 官方说明](https://github.com/vercel-labs/skills)为准；当前说明要求 Node.js 22.20 或更新版本。
+
+安装工具支持多种 Agent；本项目的制作链路在 Windows 本地环境完成验证，其他系统和宿主需要按各自环境运行检查。
+
+### 手动安装
+
+```bash
+git clone https://github.com/win520-1206/vibe-cinematic-video.git
+```
+
+将完整仓库目录放入编码助手配置的 Skills 目录，确保 `SKILL.md` 位于该 Skill 根目录。保留 `scripts/`、`assets/` 和 `references/`，它们是工作流的一部分。
+
+已有同名 Skill 时，先备份本地音乐与偏好，再合并更新。安装目录与作品工程目录分开管理。
+
+## 使用
+
+安装后，在支持 Skill 调用的助手中提出制作需求。以 Codex 为例：
 
 ```text
-使用 $vibe-cinematic-video 帮我制作视频。
+使用 $vibe-cinematic-video 帮我制作科学可视化视频。
 ```
 
-Skill 会先收集本次尚未明确的参数。你也可以一次提供：
+也可以一次提供更多信息：
 
 ```text
-使用 $vibe-cinematic-video 制作一组关于光合作用的科学可视化短剧。
-受众是大学生，发布到短视频平台。集数、时长和画幅请先与我讨论。
-默认使用 cinematic-spatial 风格，以字幕推进叙事，不配机械人声。
-我会提供音乐文件，请先分析节奏、鼓点和高潮候选，再设计画面卡点。
-先制作包含完整科学过程的代表性样片，再根据我的反馈完成全片。
+使用 $vibe-cinematic-video 制作关于光合作用与能量转换的科普短剧。
+受众是大学生，准备发布到短视频平台。
+请先与我确定集数、片长、画幅和输出规格。
+使用 cinematic-spatial 风格，以字幕推进叙事。
+我会提供音乐，请先分析节奏与高潮候选，再设计画面和声音的对应关系。
+需要复杂结构或剖切镜头时可以评估 Blender。
+先制作一个能够完整说明科学过程的代表性片段。
 ```
 
-已明确给出的参数不会重复询问。若已要求直接完成全片，流程也不强制增加一次样片确认。
+助手会集中询问尚未提供的主题、受众、用途、集数、时长、画幅、素材、输出目录和样片／整片选择。已明确的参数直接继承；已要求完成整片时，不强制增加样片确认。
 
-## 本地安装
+支持单集、系列、新片和局部节奏修订。普通演示文稿、纯口播或简单剪接任务，不必套用整套制作流程。
 
-以 Windows 本地 Codex 环境为例，将仓库目录放到：
+## 环境要求
 
-```text
-%USERPROFILE%\.codex\skills\vibe-cinematic-video\
+| 环境 | 用途 | 要求 |
+| --- | --- | --- |
+| Node.js／npm | 项目创建、依赖安装、预览和渲染 | skills CLI 当前要求 Node.js 22.20+ |
+| Python／NumPy | 音乐特征、模型和媒体辅助检查 | 在作品工程安装 `requirements.txt` |
+| Chrome／Edge／Chromium | 浏览器逐帧渲染 | 使用实际安装的浏览器并运行 `doctor` |
+| FFmpeg／ffprobe | 媒体解码、合成和检查 | 使用显式路径、PATH 或本工程可用的 Remotion 工具 |
+| Blender | 三维建模、剖切、装配和离线渲染 | 可选，仅选用相关镜头时需要 |
+
+工程通过依赖锁安装 Remotion／React 等依赖。已验证环境包括 Windows、Node.js 22.20、Python 3.13 和 Remotion 4.0.539；依赖锁代表测试过的组合，不代表对最新版的推荐。
+
+本机路径可通过 `BROWSER_EXECUTABLE`、`PYTHON`、`FFMPEG`、`FFPROBE`、`BLENDER_EXECUTABLE` 和 `RENDER_CONCURRENCY` 指定。创建器与环境检查不会静默下载浏览器或 Blender。
+
+## 运行示例
+
+以下命令从已克隆的仓库根目录执行，在相邻目录创建独立随机游走示例：
+
+```bash
+node scripts/create-project.mjs ../walk-demo --demo
+cd ../walk-demo
+npm ci
+python -m pip install -r requirements.txt
+npm run analyze:music
+npm run doctor
+npm run dev
 ```
 
-其中 `SKILL.md` 应直接位于上述文件夹内。若环境配置了其他 Skills 根目录，使用实际目录。
+预览后，在作品工程运行：
 
-下载或克隆后，在仓库根目录的 PowerShell 中执行以下命令；目标目录已存在时先自行备份或合并：
-
-```powershell
-$sourcePath = (Get-Location).Path
-$skillsRoot = Join-Path $env:USERPROFILE '.codex\skills'
-$targetPath = Join-Path $skillsRoot 'vibe-cinematic-video'
-if (Test-Path -LiteralPath $targetPath) {
-    throw '目标 Skill 已存在，请先备份或合并，避免覆盖本地设置。'
-}
-New-Item -ItemType Directory -Path $skillsRoot -Force | Out-Null
-Copy-Item -LiteralPath $sourcePath -Destination $targetPath -Recurse
+```bash
+npm run stills
+npm run render
+npm run check
+npm run package
 ```
 
-安装位置与源目录应不同。此操作复制 Skill，不会安装 Node、Python、浏览器或渲染工具；使用时仍需检查实际环境。
+示例展示单条随机轨迹、多个样本的终点分布、空间粒子、字幕和事件音效，使用本地合成的测试音乐，无需 Blender。示例参数仅用于演示，不会成为新项目默认值。
 
-## 音乐配置
+创建正式作品时使用：
 
-**公开发布版默认不包含音乐文件。** `assets/defaults.json` 保留可选本地音乐路径，缺失时由 Skill 询问素材位置或替代曲目，不会自动下载其他歌曲。
+```bash
+node scripts/create-project.mjs ../my-film
+```
 
-可以选择：
+该命令生成待填写配置。完成需求问答和分镜后，再填写 `project-contract.json` 并运行制作命令。也可以导入已完成的配置及音乐：
 
-1. 调用时提供自己的音乐路径，优先级最高。
-2. 将你有权使用的参考音轨放到 `assets/music/default-reference.m4a`。
-3. 在 `assets/defaults.json` 中登记另一个本地音乐资源。
+```bash
+node scripts/create-project.mjs ../my-film --contract ./brief.json --music ./music.m4a
+```
 
-音乐优先级为：**本次指定音乐 → 本次选定的已登记音乐 → 可选本地默认音乐**。
+目标目录必须不存在或为空。创建器不会覆盖已有作品，也不会自动安装工程依赖。
 
-更换曲目、选段、播放速度或分析帧率后，需要重新分析。音量最大不一定是高潮，瞬态也不一定是鼓点；脚本输出用于候选定位，需要结合实际听取和叙事复核。无法听取时应明确标注，不声称已经完成审听。
+## 工程命令
 
-片长超过曲长时，应讨论循环、重组、追加音乐或调整片长，不静默无限循环或变速。
+下列命令在生成的作品工程内运行：
+
+| 命令 | 用途 |
+| --- | --- |
+| `npm run doctor` | 检查工具、资源和实际渲染能力 |
+| `npm run dev` | 启动预览与时间轴定位 |
+| `npm run analyze:music` | 准备音乐选段、特征、结构候选和事件混音 |
+| `npm run stills` | 输出场景、字幕和事件边界的检查帧 |
+| `npm run render` | 渲染指定分集、片段或全部分集 |
+| `npm run check` | 检查配置、字幕布局、实际视频和音轨 |
+| `npm run package` | 生成包含源码、媒体、SRT 和报告的交付目录 |
+| `npm run blender:render` | 渲染已配置的 Blender 测试镜头 |
+| `npm run typecheck` | 检查 TypeScript 类型 |
+| `npm run test` | 执行工程机制与失败案例测试 |
+
+例如，只渲染某集的一段：
+
+```bash
+npm run render -- --episode E1 --from 48 --to 95
+```
+
+帧号从零开始，使用绝对分集帧号，两端包含。片段保留对应的音乐位置。使用自己的分集 ID 与范围，局部输出不能替代完整成片验收。
 
 ## 制作流程
 
 ```mermaid
 flowchart LR
-    A[需求与参数问答] --> B[资料核验与参考拆解]
-    B --> C[科学模型与剧情]
-    C --> D[音乐分析与事件表]
-    D --> E[代表性样片或整片制作]
-    E --> F[编排与渲染]
-    F --> G[实际成片验收]
-    G --> H[视频与工程交付]
+    A[需求与资料] --> B[科学模型与剧情]
+    B --> C[音乐分析与分镜事件]
+    C --> D[代表性片段或整片制作]
+    D --> E[预览与渲染]
+    E --> F[实际成片验收]
+    F --> G[视频与工程交付]
 ```
 
-每个段落描述对象的初始状态、动作和结果。音乐与科学过程共同决定镜头时刻，字幕和公式保留阅读窗口。模拟数据、模型预测与真实测量分别标注。
+每镜明确对象、初始状态、可见动作、结果、观众应理解的关系和科学边界。画面、字幕强调与音效引用同一事件表；连续运动可读取按帧音乐特征。公式与复杂说明保留稳定阅读窗口。
 
-## 实现架构
+## 技术架构
 
-|层|推荐职责|
-|---|---|
-|Remotion / React|时间编排、Composition、精确文字、字幕与来源提示|
-|WebGL|大量粒子、透视空间、对象重组、表面与后处理|
-|Canvas2D|科学曲线、坐标轴、波形、图例与示意图|
-|Python / NumPy|音频特征、节奏候选分析、模型与辅助验收|
-|FFmpeg / ffprobe|媒体解码、音视频编码与元数据检查|
+| 层 | 职责 |
+| --- | --- |
+| 配置与事件表 | 统一集数、各集片长、规格、场景、字幕和关键时刻 |
+| 科学模型 | 独立计算轨迹、样本、概率、曲线和计数 |
+| Remotion／React | 全片编排、精确文字、字幕、来源和媒体合成 |
+| WebGL | 大量粒子、透视空间、相机、连续形变和泛光 |
+| Canvas2D | 科学曲线、坐标轴、波形、图例和可审查图解 |
+| Python／NumPy | 音乐特征、节奏候选、音效准备及辅助检查 |
+| Blender | 按需制作复杂三维镜头，输出供时间轴合成的素材 |
 
-`assets/project-template/` 提供可安装运行的工程模板和依赖锁；`assets/animation-core/` 保留轻量机制示例。依赖通过 npm ci 安装，不捆绑 node_modules。特定题材仍需重新设计科学模型与场景。Blender 是按镜头选择的可选工具。
+各图层共享帧号、全片时间、镜头时间、模型、音乐与事件状态。随机过程固定种子，同一帧可独立重建，支持跳转预览与分片渲染。
 
-生产动画按帧号和项目 fps 计算时间，固定随机种子，允许任意帧独立重建。不要依赖浏览器实时计时或并发 worker 的执行顺序。
+模板包含随机游走和分布示例。新题材需要对应的模型与场景，不能只替换标题和装饰。接口见[工程脚手架](references/scaffold.md)和[架构说明](references/architecture.md)。
 
-## 辅助脚本
+## 音乐与素材
 
-Python 脚本需要 NumPy：
+公开仓库不包含私人参考音轨。可以调用时提供音乐、创建工程时使用 `--music`，或在本地 `assets/defaults.json` 中登记资源。选择优先级为：本次指定曲目、选定的已登记曲目、可用的本地默认音轨。
 
-```shell
-python -m pip install -r requirements.txt
+更换曲目、截取位置、播放速度或分析帧率后，应重新分析。BPM、瞬态、段落和高潮检测均为候选，需要结合实际听取与叙事复核。参考混音保留真实来源说明，不将未分离材料称为纯音乐音轨。
+
+片长超出音乐长度时，需要明确选择重组、循环、追加音乐或调整片长。字体、模型、图片和视频素材分别记录来源及使用范围。详见[音乐适配](references/music-adaptation.md)。
+
+## 可选 Blender 镜头
+
+Blender 适合复杂实体结构、剖切、装配、机械运动、材质和照明。是否使用由镜头的解释收益、视觉需要与渲染成本决定；普通曲线和粒子动画继续使用现有图形路线。
+
+配置三维镜头后，在作品工程运行：
+
+```bash
+npm run blender:render -- --episode E1 --scene scene-id
 ```
 
-FFmpeg 和 ffprobe 单独安装或使用已有环境中的版本。先将音频转为整数 PCM WAV，例如：
+Blender 输出无声视频，透明叠加使用 RGBA PNG 序列；Remotion 管理最终字幕、来源和声音。工程记录帧率、帧数、事件映射、`.blend` 源文件及渲染参数。
 
-```shell
-ffmpeg -i music.mp3 -vn -ac 1 -ar 48000 -c:a pcm_s16le analysis.wav
-```
+自带壳体开合场景用于验证接口，实际题材需单独建模。缺少 Blender 时会明确报告受影响镜头，基础示例仍可运行。详见[Blender 制作说明](references/blender.md)。
 
-### 1. 按帧音频特征
+## 验证与交付
 
-```shell
-python scripts/audio_features.py --input analysis.wav --fps 30 --output audio-features.json
-```
+技术检查覆盖必填配置、帧对齐、场景连续性、独立确认稿、字幕停留与布局、事件引用、音效并发、资源、缓存和导出指纹。成片检查包含完整帧解码、视频规格、音轨时长及关键事件前后帧。
 
-提取低／中／高频能量、RMS 和候选瞬态。示例 `30` 应替换为本次项目 fps；不做语音识别或音源分离。
+`qa/report.json` 分别记录技术结果与科学、连续观看、审听状态。自动检查提供可复现证据，科学解释和观看体验仍需人工判断。
 
-### 2. 音乐结构候选
+实测包括：9 项测试及类型检查通过，横屏示例与两集不同片长的竖屏输出完整解码通过，跳转后同帧图像一致，局部渲染音轨位置核验通过。Blender 脚本完成语法和缺失依赖检查，尚未进行实机渲染验证。完整范围见[验证记录](assets/validation-report.json)。
 
-```shell
-python scripts/music_structure.py --features audio-features.json --output music-analysis.json
-```
+交付可包含 MP4、SRT、可编辑工程、资料依据、资产记录和检查报告。项目交付包包含本次作品媒体；公开 Skill 分发包排除私人音乐、原成片、凭证、依赖目录和缓存。
 
-输出 BPM 候选、估计节拍网格、瞬态、段落变化和高潮候选。存在半速／倍速歧义、变速与非鼓瞬态误判的可能；`listeningStatus` 默认是 `not_reviewed`。
+## 风格扩展
 
-### 3. 导出媒体规格
+在 `assets/styles/` 编写独立风格规范，在 `index.json` 登记唯一 ID，再由调用请求选择。风格描述配色、材质、空间、文字和运动偏好；集数、片长与音乐落点仍属于本次项目配置。
 
-复制 `assets/project-contract.example.json` 为本次 `project-contract.json`，先完成问答并填写实际输出参数，再检查：
-
-```shell
-python scripts/inspect_media.py --ffprobe /path/to/ffprobe --input episode.mp4 --contract project-contract.json --output metadata-check.json
-```
-
-该脚本检查元数据与参数约定，并计算关键时刻前后帧号。它不代替完整解码、画面审查、科学核验或实际听取。
+工程通过 `style.tokens` 设置运行时表现参数，完整题材场景由编码助手实现。风格文档不会自动生成所有视觉代码。
 
 ## 仓库结构
 
 ```text
 vibe-cinematic-video/
-├── README.md
-├── SKILL.md
-├── requirements.txt
-├── .gitignore
-├── agents/
-│   └── openai.yaml
-├── references/
-│   ├── scaffold.md
-│   ├── scientific-shot-design.md
-│   ├── blender.md
-│   ├── workflow.md
-│   ├── architecture.md
-│   ├── motion-and-audio.md
-│   ├── music-adaptation.md
-│   ├── engineering.md
-│   ├── scientific-integrity.md
-│   ├── verification.md
-│   ├── production-lessons.md
-│   └── project-contract.md
-├── scripts/
-│   ├── create-project.mjs
-│   ├── audio_features.py
-│   ├── music_structure.py
-│   └── inspect_media.py
+├── SKILL.md                   # 编码助手的工作流入口
+├── README.md                  # 项目与使用说明
+├── THIRD_PARTY_NOTICES.md      # 方法来源与资源边界
+├── agents/                    # 助手界面元信息
+├── scripts/                   # 项目创建、音频分析与媒体辅助工具
+├── references/                # 分镜、架构、音乐、Blender与验收规范
 └── assets/
-    ├── defaults.json
-    ├── project-contract.example.json
-    ├── RESOURCE_MANIFEST.json
-    ├── validation-report.json
-    ├── project-template/
-    ├── examples/
-    ├── animation-core/
-    ├── styles/
-    └── music/
-        └── README.md
+    ├── project-template/      # 独立Remotion工程与依赖锁
+    ├── examples/              # 显式配置的原创示例
+    ├── animation-core/        # 轻量动画机制示例
+    ├── styles/                # 风格规范与索引
+    ├── music/                 # 本地音乐配置说明
+    └── validation-report.json # 验证范围与限制
 ```
 
-## 增加风格
+## 安装与分发答疑
 
-1. 在 `assets/styles/` 新建风格文档，描述配色、空间、材质、文字、运动与声音关系。
-2. 在 `assets/styles/index.json` 增加唯一 ID 和文档路径。
-3. 调用时指定该 ID，或仅在当前项目中设置临时覆盖。
+**是否需要发布到 npm？**
 
-保留已有风格档案。风格可以提供偏好，不应写死集数、片长、标题长度或音乐高潮时刻。
+通过 `npx skills add owner/repo` 安装时不需要。本仓库通过 GitHub 分发，npm 提供的是 `skills` 安装工具。仓库内 `npm ci` 用于作品工程依赖安装，与发布同名 npm 包是两件事。
 
-## 边界与交付
+若以后要提供 `npx vibe-cinematic-video` 或 `npm install vibe-cinematic-video`，则需单独设计 npm 包入口、版本和文件范围，并使用 npm 账号发布。当前入口使用上文的 `npx skills add`。
 
-- 科学准确性需要资料与模型核验；光效不能替代解释，也不能颠倒物理因果。
-- 脚本分析不等于完成听觉审美判断，元数据通过不等于完整成片通过。
-- 生成媒体、实拍或其他3D工具可以按题材加入，不强制全片只用一种技术。
-- 推荐交付 MP4、字幕、可编辑工程、资料依据、资源记录与实际验收结果；具体以任务约定为准。
+**能在 Skill 目录网站找到吗？**
 
-## 素材与授权
+本仓库根目录包含标准 `SKILL.md` 及名称、描述，可被支持此格式的安装工具识别。[skills.sh 官方 FAQ](https://skills.sh/docs/faq)说明，用户通过 CLI 安装产生的匿名安装统计用于目录展示与排名；[SkillsMP](https://skillsmp.com/)则聚合公开 GitHub Skill 来源。
 
-仓库代码和制作文档与用户自行加入的音乐、视频、字体、图片分别管理。本发布版不包含原参考音轨或完整成片，也不提供这些第三方资源的再分发授权。
+公开可安装不代表已经被所有网站收录。展示时间、检索结果和收录规则由各站点决定；本项目不将未确认的目录页标为已上线，也不将目录展示视为官方认证。
 
-当前未设置仓库代码与文档的 `LICENSE`；维护者可在发布时选择并添加合适的许可证。选择代码许可证时，也应单独说明媒体资源的适用范围。
+## 来源与许可
 
-## 新增：完整工程脚手架
+科学镜头设计参考了 HeyChengC 的概念可视化方法，验收机制参考了 LuZhong-Li 的事件同源与检查思路，并针对本项目架构重新实现。来源及未包含的参考素材见[方法来源说明](THIRD_PARTY_NOTICES.md)。
 
-```shell
-node scripts/create-project.mjs /path/to/new-project
-# 独立验证示例（明确使用示例参数与本地合成音乐）
-node scripts/create-project.mjs /path/to/demo-project --demo
-```
-
-进入生成工程，执行 `npm ci` 和 `python -m pip install -r requirements.txt`。完成项目配置与确认稿后，运行 `npm run analyze:music`、`npm run doctor`、`npm run dev`、`npm run stills`、`npm run render`、`npm run check`、`npm run package`。片段渲染使用 `--episode ID --from 起始帧 --to 结束帧`，帧号为绝对分集帧号且两端包含。
-
-新项目默认参数仍为空；`--contract 配置.json` 可导入已完成参数。`--music 音乐路径`优先使用指定曲目；私人版默认音乐仅复制到本次工程，公开包没有该音轨。
-
-脚手架提供统一时间、模型与音频接口、实际文字盒检查、字幕覆盖、完整媒体解码与事件前后帧证据。`qa/report.json`区分技术结果和未完成的人工科学、观看、审听状态。
-
-## 新增：可选 Blender
-
-复杂三维结构、剖切、装配或材质表现需要时按镜头启用。通过 `BLENDER_EXECUTABLE` 或 PATH 指定，不自动安装。默认输出无声视频；透明叠加使用RGBA PNG序列，最终字幕与声音仍由Remotion统一编排。
-
-工程内 `npm run blender:render -- --episode ID --scene ID` 提供简单壳体开合测试；真实题材要单独实现几何和动作，测试场景不能冒充真实科学模型。未安装Blender时基础示例照常可用。
-
-详细说明：[工程脚手架](references/scaffold.md)、[科学镜头设计](references/scientific-shot-design.md)、[Blender接入](references/blender.md)、[方法来源](THIRD_PARTY_NOTICES.md)。
+仓库目前尚未声明统一的代码与文档许可证。Remotion、React、Blender 等依赖遵循各自许可证；用户提供的音乐、字体、模型与影像分别管理，公开仓库不授予这些第三方媒体的再分发权限。
