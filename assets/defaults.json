@@ -24,5 +24,10 @@
     "height": null,
     "titleCutSeconds": null
   },
-  "parameterPolicy": "Ask at invocation for missing project values; never inherit example episode count, duration or cut times"
+  "parameterPolicy": "Ask at invocation for missing project values; never inherit example episode count, duration or cut times",
+  "presentation": {
+    "mode": "full-dynamic",
+    "scriptPolicy": "preserve full confirmed text; stage fragments over time",
+    "fixedSubtitleArea": false
+  }
 }

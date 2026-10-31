@@ -50,8 +50,8 @@
     },
     {
       "path": "project-template/README.md",
-      "bytes": 3970,
-      "sha256": "d9c189a22b85a95fd2d9d9a8cd7eb2d81cc40de7cc9b00d1e46ed079c3c20571"
+      "bytes": 5513,
+      "sha256": "72de598005a732d551d1e8e10a9e7e6f409076a553d3e2a99df170326545a1d6"
     },
     {
       "path": "project-template/remotion.config.ts",
@@ -70,8 +70,8 @@
     },
     {
       "path": "project-template/scripts/cli.mjs",
-      "bytes": 6971,
-      "sha256": "d16ad89800390d6dd087042781a11bd58f4e40f67028079a833a286ab72e88f5"
+      "bytes": 7266,
+      "sha256": "8e41b4e87f4d00c842795d3a42246f0f4a1b1a5c8217799d8f19e5630cfed181"
     },
     {
       "path": "project-template/scripts/common.mjs",
@@ -80,13 +80,13 @@
     },
     {
       "path": "project-template/scripts/renderer.mjs",
-      "bytes": 1916,
-      "sha256": "abe8caba6b07a2f5444113c1e4dc28dc1644e0a7200aabfc87c388606e8ba5fd"
+      "bytes": 2043,
+      "sha256": "c9590b99c613a05323e2389b6e58471639a162f1c19976654e7dcaeb4fa7ec52"
     },
     {
       "path": "project-template/scripts/validate.mjs",
-      "bytes": 4358,
-      "sha256": "8e5f8e2e60b1b5563479205d737e77db19912d3e1c0ecac3faf5772971a6e1f6"
+      "bytes": 5980,
+      "sha256": "909e6bd59333a5e035fbcf97b7cf1af8f1f7fcf1b85f15d25fac4dfd2f9d2b23"
     },
     {
       "path": "project-template/shared/model.mjs",
@@ -94,9 +94,19 @@
       "sha256": "f98f1eac0184ee969ecc929b35ff22b3588609984e787f0142b491512d40fa03"
     },
     {
+      "path": "project-template/shared/motion.mjs",
+      "bytes": 5970,
+      "sha256": "d7ea96f234b7509673acc12533f3b88a6297c003e01e13e969afeb398fdf3f45"
+    },
+    {
+      "path": "project-template/shared/presentation.mjs",
+      "bytes": 6532,
+      "sha256": "5f1db6ba328c2c826c3f2520e11f5545bbe823d487902f1bd92066f8fb6dcec2"
+    },
+    {
       "path": "project-template/shared/project.mjs",
-      "bytes": 5881,
-      "sha256": "d3abdbbec5d934fbbd5ce627ff240e749ae0b82fafea43e8ca19305b48cd5531"
+      "bytes": 8182,
+      "sha256": "a46a893fa9b459990db01b83b592c3b2818a722ada5a749614626b7b52dcdb59"
     },
     {
       "path": "project-template/src/Bloom.ts",
@@ -105,13 +115,18 @@
     },
     {
       "path": "project-template/src/Film.tsx",
-      "bytes": 3561,
-      "sha256": "a4b3b28b62596488ee1ff5f506db51cc769bbb6f906a99a476d71275b0891ff4"
+      "bytes": 4142,
+      "sha256": "890a5d0149a5bf3005fca84e7bdcbdb84d4a48da577e54bb2440fad399ae475d"
     },
     {
       "path": "project-template/src/index.ts",
       "bytes": 88,
       "sha256": "2e0e358282a1b998a65387c653b97c2bb2eb7aae94cf200fc0b8d919f7be73a6"
+    },
+    {
+      "path": "project-template/src/KineticText.tsx",
+      "bytes": 1949,
+      "sha256": "66a53ec6247f7aa84ddfa6ca7c4f094accff3766ba0f10d650f5a47b8057f9ec"
     },
     {
       "path": "project-template/src/Root.tsx",
@@ -129,9 +144,19 @@
       "sha256": "9b2486c8b3827bf8c36a93ab9e320c23ac8dd23836d6035bb9f70ef8d5c9d092"
     },
     {
+      "path": "project-template/src/SubjectLayer.tsx",
+      "bytes": 4054,
+      "sha256": "b76a29b8a69c4ae07a623f526ff95fef6123ae7c54b4cefdbcd6b2889a410896"
+    },
+    {
       "path": "project-template/tests/core.test.mjs",
       "bytes": 4193,
       "sha256": "4a8fcdaaacc8b51dc423bab0d3982f5063648bb69e72794652f1b4ebf20bd9a5"
+    },
+    {
+      "path": "project-template/tests/presentation.test.mjs",
+      "bytes": 8854,
+      "sha256": "25da2138dff6ed6ec622a2ae1860cca7ecd6681abe11c5ca5b0e76eb6019d7f6"
     },
     {
       "path": "project-template/tools/prepare_audio.py",
@@ -150,13 +175,14 @@
     },
     {
       "path": "examples/random-walk.json",
-      "bytes": 3234,
-      "sha256": "f2b5e9041bb05327a834f455c85d6b2d8233aaf7a1b699a2805dbfe748121b84"
+      "bytes": 4465,
+      "sha256": "9fbb26d30ff49aa06337f1a8487da344129a2033b7db38dbcc619a5ff074ed58"
     }
   ],
   "projectTemplate": "project-template/",
   "examples": [
     "examples/random-walk.json"
   ],
-  "optionalBlender": "project-template/blender/build_scene.py"
+  "optionalBlender": "project-template/blender/build_scene.py",
+  "presentation": "full-dynamic for newly created projects; legacy compatibility retained"
 }

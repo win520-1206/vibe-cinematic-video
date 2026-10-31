@@ -3,7 +3,9 @@ import path from 'node:path';
 import {spawn} from 'node:child_process';
 import {arg,project,episodes,tool,run,json,write,hash,browser,assetErrors,publicPath,copyTree,sourceHash} from './common.mjs';
 import {criticalFrames} from '../shared/project.mjs';
-import {inspectProject,inspectBoxes,inspectBlenderSources} from './validate.mjs';
+import {cuesFor} from '../shared/presentation.mjs';
+import {inspectMotion} from '../shared/motion.mjs';
+import {inspectProject,inspectBoxes,inspectBlenderSources,inspectTextDensity} from './validate.mjs';
 const mode=process.argv[2];
 async function main(){const p=project();fs.mkdirSync('qa',{recursive:true});
  if(mode==='dev'){const binary=path.resolve('node_modules/@remotion/cli/remotion-cli.js');if(!fs.existsSync(binary))throw Error('Run npm ci');const proc=spawn(process.execPath,[binary,'studio','src/index.ts','--no-open'],{stdio:'inherit',env:{...process.env,BROWSER_EXECUTABLE:browser()}});proc.on('exit',code=>process.exit(code??1));return}
@@ -23,7 +25,7 @@ async function main(){const p=project();fs.mkdirSync('qa',{recursive:true});
   const report={passed:false,contractHash:hash('project-contract.json'),errors:[],warnings:check.warnings,episodes:[],manualReview:{science:'not_reviewed',continuousViewing:'not_reviewed',listening:'not_reviewed'}};
   if(arg('static')!==null||process.argv.includes('--static')){write('qa/static.json',{...report,passed:true,scope:'configuration and generated assets only'});console.log('Static checks passed');return}
   const {session}=await import('./renderer.mjs'),r=await session(p);
-  try{for(const e of episodes(p)){for(const f of criticalFrames(p,e))await r.still(e,f,path.resolve(`qa/${e.id}-${f}.png`));const rows=r.rows.filter(x=>x.episode===e.id);report.errors.push(...rows.flatMap(row=>inspectBoxes(row,p)));for(const q of e.scenes.flatMap(s=>s.captions||[]))if(!rows.some(x=>x.boxes.some(b=>b.id===q.id)))report.errors.push(`${q.id}: never measured in rendered frames`);
+  try{for(const e of episodes(p)){for(const f of criticalFrames(p,e))await r.still(e,f,path.resolve(`qa/${e.id}-${f}.png`));const rows=r.rows.filter(x=>x.episode===e.id);report.errors.push(...rows.flatMap(row=>inspectBoxes(row,p)));report.warnings.push(...inspectMotion(rows),...inspectTextDensity(rows));for(const q of e.scenes.flatMap(s=>p.presentation.mode==='full-dynamic'?cuesFor(s,p.video.fps):(s.captions||[])))if(!rows.some(x=>x.boxes.some(b=>b.id===q.id&&(!b.phase||b.phase==='read'))))report.errors.push(`${q.id}: never measured in a stable reading frame`);
     const video=path.resolve(`renders/${e.id}.mp4`);if(!fs.existsSync(video)){report.errors.push(`${e.id}: final video missing`);continue}const rec=json(video+'.render.json');if(rec.contractHash!==report.contractHash||rec.sourceHash!==sourceHash()||rec.audioHash!==hash(`public/generated/${e.id}-mix.wav`)||rec.videoHash!==hash(video)||rec.startFrame!==0||rec.endFrame!==e.durationInFrames-1)report.errors.push(`${e.id}: stale or partial final render`);
     const expectation={...p.video,frames:e.durationInFrames,audioRequired:e.audio.required!==false,criticalFrames:criticalFrames(p,e)};write(`qa/${e.id}-expected.json`,expectation);
     try{run(process.env.PYTHON||'python',['-X','utf8','tools/verify_media.py','--video',video,'--ffmpeg',tool('ffmpeg'),'--ffprobe',tool('ffprobe'),'--expected',`qa/${e.id}-expected.json`,'--output',`qa/${e.id}-media.json`],{stdio:'inherit'})}catch(err){report.errors.push(err.message)}

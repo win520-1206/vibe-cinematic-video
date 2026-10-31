@@ -39,5 +39,8 @@
     "sampleOrFull": null,
     "requiredQuestionsAnswered": false
   },
-  "episodes": []
+  "episodes": [],
+  "presentation": {
+    "mode": "full-dynamic"
+  }
 }

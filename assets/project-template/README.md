@@ -35,3 +35,13 @@ Run `npm run blender:render -- --episode E1 --scene scene-id`. The supplied buil
 ## Delivery
 
 Package copies project sources and the current media into a timestamped deliveries directory and exports SRT. It intentionally contains this project's media; this is distinct from the public Skill ZIP, which excludes private media. No server, node_modules, credentials or rendering caches are packaged. Commit source provenance and manual review findings in docs.
+
+## Dynamic text and subject motion
+
+New projects use `presentation.mode: full-dynamic`. Existing contracts without it keep `legacy`; no existing project is rewritten automatically. Source `captions` and `script-manifest.json` retain the full approved script and SRT. Display `textCues` reference `sourceId`; ordered fragments must reproduce source text exactly. Without explicit cues, punctuation-based phrases are proposed; review timing against the subject action.
+
+Cues support main/label/formula roles, left/right/center/bottom/anchor placement, normalized x/y/width, emphasis words, enterSeconds/exitSeconds, mask/relay/path/follow/emphasis/none effects and explicit transition overlapGroup. `path` takes two normalized offsets. `follow` requires an object anchor; labels track it, while anchored main text settles at reading start. `scene.annotations` adds traced, timed notes without constant titles and footnotes.
+
+`shared/motion.mjs` uses stable walker IDs, phase-aware camera and sample arrivals. `motion:{developStart,developEnd,expect,camera}` can customize stages; times remain absolute episode seconds. Counts and endpoints come from the same model. Decoration is separate. Extend the scene registry for new scientific objects and anchors.
+
+Checks measure real text boxes during entrance, reading and exit; reading rates exclude animation time. Model coordinates, camera and counts are recorded separately. Source/scene correctness and perceptual quality still need visual review.

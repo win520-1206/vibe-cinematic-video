@@ -66,7 +66,7 @@
           "action": "按固定种子逐步采样并累计",
           "after": "展示轨迹或终点计数",
           "understanding": "单次难预测，有限样本可以显示整体分布",
-          "science": "教学模拟 · 等概率左右步进 · 空间光点为装饰",
+          "science": "教学模拟 · 每步等概率向左或向右 · 固定种子与有限样本",
           "model": {
             "steps": 24,
             "samples": 160
@@ -80,7 +80,36 @@
               "text": "每一步都可能向左，也可能向右。",
               "start": 0.5,
               "end": 5.5,
-              "eventId": "walk-start"
+              "eventId": "walk-start",
+              "emphasis": [
+                "向左",
+                "向右"
+              ]
+            }
+          ],
+          "motion": {
+            "expect": "subject",
+            "camera": {
+              "fromZoom": 1.03,
+              "toZoom": 0.98,
+              "panX": 0.015,
+              "panY": -0.012,
+              "yaw": 0.05
+            }
+          },
+          "annotations": [
+            {
+              "id": "simulation-note",
+              "text": "教学模拟",
+              "start": 0.5,
+              "end": 2,
+              "role": "label",
+              "placement": "left",
+              "x": 0.08,
+              "y": 0.32,
+              "width": 0.4,
+              "fontScale": 0.8,
+              "effect": "relay"
             }
           ]
         },
@@ -95,7 +124,7 @@
           "action": "按固定种子逐步采样并累计",
           "after": "展示轨迹或终点计数",
           "understanding": "单次难预测，有限样本可以显示整体分布",
-          "science": "教学模拟 · 等概率左右步进 · 空间光点为装饰",
+          "science": "教学模拟 · 每步等概率向左或向右 · 固定种子与有限样本",
           "model": {
             "steps": 24,
             "samples": 160
@@ -109,11 +138,28 @@
               "text": "重复许多次，观察终点怎样分布。",
               "start": 6.5,
               "end": 11.5,
-              "eventId": "ensemble-start"
+              "eventId": "ensemble-start",
+              "emphasis": [
+                "重复",
+                "分布"
+              ]
             }
-          ]
+          ],
+          "motion": {
+            "expect": "subject",
+            "camera": {
+              "fromZoom": 1.03,
+              "toZoom": 0.98,
+              "panX": 0.015,
+              "panY": -0.012,
+              "yaw": 0.05
+            }
+          }
         }
       ]
     }
-  ]
+  ],
+  "presentation": {
+    "mode": "full-dynamic"
+  }
 }

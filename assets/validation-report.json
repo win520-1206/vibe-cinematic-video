@@ -1,91 +1,95 @@
 {
   "skill": "vibe-cinematic-video",
-  "revision": "runnable-scaffold-optional-blender",
+  "revision": "full-dynamic-text-and-subject-motion",
   "date": "2026-10-31",
   "formatValidation": "passed with official quick_validate.py in UTF-8 mode",
   "typecheck": "passed",
   "unitTests": {
-    "passed": 9,
+    "passed": 26,
     "failed": 0
   },
-  "standaloneInstall": "npm ci from lock; no source-project node_modules link",
-  "fullRenders": [
-    {
-      "variant": "landscape",
-      "width": 960,
-      "height": 540,
-      "fps": 24,
-      "decodedFrames": 288,
-      "technicalPassed": true
+  "renderedFrames": {
+    "scenarios": [
+      {
+        "name": "horizontal",
+        "frames": 22,
+        "width": 960,
+        "height": 540,
+        "stableCues": 5
+      },
+      {
+        "name": "portrait",
+        "frames": 22,
+        "width": 540,
+        "height": 960,
+        "stableCues": 5
+      },
+      {
+        "name": "anchor",
+        "frames": 22,
+        "width": 960,
+        "height": 540,
+        "stableCues": 5
+      }
+    ],
+    "errors": [],
+    "warnings": [],
+    "deterministicSeeking": true,
+    "injectedMissingWordsRejected": true,
+    "comparisonFilmProduced": false,
+    "passed": true
+  },
+  "additionalRenderedChecks": {
+    "eventEmphasisNoLayoutShift": true,
+    "actualOverflowDetected": true,
+    "legacyCompatibility": true,
+    "formulaAndEmphasisRendered": true,
+    "passed": true,
+    "comparisonFilmProduced": false
+  },
+  "shortTechnicalClip": {
+    "frames": 48,
+    "fullDecode": true,
+    "audioTimeline": {
+      "sourceStartFrame": 132,
+      "sourceStartSeconds": 5.5,
+      "offsetSamples": 0,
+      "gainAdjustedRmsError": 0.00014022653576968065,
+      "gain": 0.706672121641292,
+      "passed": true
     },
-    {
-      "variant": "portrait-two-episodes",
-      "width": 360,
-      "height": 640,
-      "fps": 30,
-      "decodedFrames": [
-        36,
-        48
-      ],
-      "technicalPassed": true
-    }
-  ],
-  "integration": {
-    "passed": true,
-    "checks": [
-      "changed crop rejected",
-      "omitted caption rejected",
-      "source fingerprint changes",
-      "frame 55 -> 0 -> 55 identical PNG"
-    ]
+    "sourceFingerprint": "verified"
   },
-  "partialRender": {
-    "sourceStartFrame": 48,
-    "sourceStartSeconds": 2,
-    "bestOffsetSamples": 0,
-    "fittedDecodeGain": 0.7066901846541044,
-    "gainAdjustedRmsError": 0.0001183086084051988,
-    "resetSegmentRmsError": 0.008704527745180417,
-    "passed": true,
-    "note": "Compare timing independently of mono/stereo mix gain and AAC padding; not an unchanged-audio claim."
+  "compatibility": {
+    "missingPresentationMode": "legacy",
+    "newProjectDefault": "full-dynamic",
+    "existingProjectsAutomaticallyChanged": false,
+    "captionMotherScript": "retained",
+    "srtExport": "continues to export complete source captions, not presentation fragments",
+    "newProjectGeneratorAndLegacyImport": "verified"
   },
-  "additionalChecks": [
-    "nonempty target refused",
-    "empty contract retains unset project parameters",
-    "private default music copied byte-identically",
-    "independent manifest detects missing captions",
-    "event/gap/overlap/asset failures detected",
-    "source/media fingerprint guards stale delivery",
-    "original project unchanged",
-    "project package and SRT exported"
-  ],
-  "blender": {
-    "installedDetected": false,
-    "pythonSyntax": "passed",
-    "missingExecutable": "explicit failure; no replacement scene",
-    "realRender": "not_run"
+  "scope": {
+    "comparisonFilmProduced": false,
+    "newFullFilmProduced": false,
+    "referenceFootageCopied": false,
+    "githubPushed": false
   },
   "manualReview": {
     "representativeStills": "viewed",
+    "referenceMotion": "overview and time-sequence frames inspected",
     "continuousViewing": "not_reviewed",
     "listening": "not_reviewed",
-    "scientificScope": "original pedagogical Bernoulli walk; not measured data"
+    "scientificScope": "teaching random walk; counts and endpoints checked against model"
+  },
+  "blender": {
+    "optional": true,
+    "realRender": "not_run"
   },
   "limitations": [
-    "Blender scene generation requires a real Blender installation and has not been rendered here.",
-    "Automated checks do not establish scientific correctness or full perceptual readability.",
-    "New subjects still require model and scene authoring; the starter is not an automatic film writer.",
-    "No independent subagent evaluation performed."
+    "Automated state and box checks do not certify scientific correctness or visual quality.",
+    "Subject-motion summaries are separate from camera/decoration; actual pixel evidence still requires review.",
+    "Only internal technical frames and a short clip were rendered in this revision.",
+    "Blender still requires real-machine rendering validation."
   ],
-  "preview": {
-    "command": "npm run dev",
-    "httpStatus": 200,
-    "compiled": true,
-    "testServerStopped": true
-  },
-  "publicArchive": {
-    "extractedCreateProjectDemo": "passed",
-    "privateMediaIncluded": false,
-    "zipCRC": "passed"
-  }
+  "anchorTrajectoryExtrema": "critical frame selection tested"
 }
