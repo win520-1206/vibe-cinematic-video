@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 2,
+  "project": {
+    "title": "随机中的秩序",
+    "theme": "随机游走",
+    "audience": "示例观看者",
+    "purpose": "脚手架验证",
+    "episodeCount": 1
+  },
+  "video": {
+    "width": 960,
+    "height": 540,
+    "fps": 24,
+    "durationSeconds": null
+  },
+  "audio": {
+    "required": true,
+    "file": "demo-music.wav",
+    "narration": false,
+    "cropStartSeconds": 0,
+    "gainDb": -3,
+    "listeningStatus": "not_reviewed"
+  },
+  "style": {
+    "styleId": "cinematic-spatial",
+    "tokens": {}
+  },
+  "seed": 137,
+  "qa": {
+    "maxCharactersPerSecond": 12,
+    "maxConcurrentSounds": 3
+  },
+  "episodes": [
+    {
+      "id": "E1",
+      "durationSeconds": 12,
+      "events": [
+        {
+          "id": "walk-start",
+          "atSeconds": 1,
+          "sound": {
+            "durationSeconds": 0.25,
+            "gainDb": -20,
+            "frequency": 330
+          }
+        },
+        {
+          "id": "ensemble-start",
+          "atSeconds": 7,
+          "sound": {
+            "durationSeconds": 0.4,
+            "gainDb": -20,
+            "frequency": 220
+          }
+        }
+      ],
+      "scenes": [
+        {
+          "id": "path",
+          "kind": "walk",
+          "start": 0,
+          "end": 6,
+          "title": "每一步随机，整体有规律",
+          "object": "随机游走轨迹",
+          "before": "尚未发生的随机步骤",
+          "action": "按固定种子逐步采样并累计",
+          "after": "展示轨迹或终点计数",
+          "understanding": "单次难预测，有限样本可以显示整体分布",
+          "science": "教学模拟 · 等概率左右步进 · 空间光点为装饰",
+          "model": {
+            "steps": 24,
+            "samples": 160
+          },
+          "eventIds": [
+            "walk-start"
+          ],
+          "captions": [
+            {
+              "id": "path-caption",
+              "text": "每一步都可能向左，也可能向右。",
+              "start": 0.5,
+              "end": 5.5,
+              "eventId": "walk-start"
+            }
+          ]
+        },
+        {
+          "id": "ensemble",
+          "kind": "distribution",
+          "start": 6,
+          "end": 12,
+          "title": "重复实验，让分布显现",
+          "object": "多个样本的终点",
+          "before": "尚未发生的随机步骤",
+          "action": "按固定种子逐步采样并累计",
+          "after": "展示轨迹或终点计数",
+          "understanding": "单次难预测，有限样本可以显示整体分布",
+          "science": "教学模拟 · 等概率左右步进 · 空间光点为装饰",
+          "model": {
+            "steps": 24,
+            "samples": 160
+          },
+          "eventIds": [
+            "ensemble-start"
+          ],
+          "captions": [
+            {
+              "id": "ensemble-caption",
+              "text": "重复许多次，观察终点怎样分布。",
+              "start": 6.5,
+              "end": 11.5,
+              "eventId": "ensemble-start"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

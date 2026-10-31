@@ -68,3 +68,7 @@ WebGL处理大量粒子、线、透视、重组、表面与光传播；Canvas2D�
 ## 通用机制代码
 
 assets/animation-core提供SceneLayer.tsx与deterministic-motion.ts。前者从当前Composition读取画幅与fps，后者以项目传入的transition起终时刻计算确定性形变。没有预置作品标题、题材、集数或固定卡点。例子只演示散点到球面的几何变化，实际科学模型与画面需按主题另行设计；它不代表完整的视觉效果库。
+
+## 可运行接口与离线三维
+
+新工程使用assets/project-template/shared/project.mjs统一规范化配置和帧上下文，模型与图形分离。参见[脚手架](scaffold.md)。Blender按镜头生成时间媒体，接受相同事件表并明确帧映射，作为Remotion的一层合成；参见[Blender](blender.md)。基础运行不依赖Blender。

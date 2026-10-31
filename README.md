@@ -4,7 +4,7 @@
 
 一个面向本地编码助手的 **Skill**：将科学主题转化为具有剧情、连续空间运动和声画互动的视频制作流程，覆盖需求问答、资料核验、参考拆解、模型设计、分镜、程序动画、音乐适配、渲染与实际成片验收。
 
-> 本仓库提供 Skill 指令、制作参考、分析脚本和通用动画机制示例。它不是独立的视频剪辑软件，也不是安装后运行一条命令就能自动生成任意成片的应用。
+> 本仓库提供 Skill 指令、制作参考、分析脚本和通用动画机制示例。新增可运行Remotion工程模板、项目创建器和检查工具；它仍需要编码助手为具体题材设计故事、模型和镜头，不是一键生成任意成片的软件。
 
 ## 特点
 
@@ -107,7 +107,7 @@ flowchart LR
 |Python / NumPy|音频特征、节奏候选分析、模型与辅助验收|
 |FFmpeg / ffprobe|媒体解码、音视频编码与元数据检查|
 
-这些是制作方法，仓库不捆绑完整渲染运行时。`assets/animation-core/` 是通用机制示例，不是完整视频模板。特定题材需要重新设计科学模型与场景。
+`assets/project-template/` 提供可安装运行的工程模板和依赖锁；`assets/animation-core/` 保留轻量机制示例。依赖通过 npm ci 安装，不捆绑 node_modules。特定题材仍需重新设计科学模型与场景。Blender 是按镜头选择的可选工具。
 
 生产动画按帧号和项目 fps 计算时间，固定随机种子，允许任意帧独立重建。不要依赖浏览器实时计时或并发 worker 的执行顺序。
 
@@ -162,6 +162,9 @@ vibe-cinematic-video/
 ├── agents/
 │   └── openai.yaml
 ├── references/
+│   ├── scaffold.md
+│   ├── scientific-shot-design.md
+│   ├── blender.md
 │   ├── workflow.md
 │   ├── architecture.md
 │   ├── motion-and-audio.md
@@ -172,6 +175,7 @@ vibe-cinematic-video/
 │   ├── production-lessons.md
 │   └── project-contract.md
 ├── scripts/
+│   ├── create-project.mjs
 │   ├── audio_features.py
 │   ├── music_structure.py
 │   └── inspect_media.py
@@ -180,6 +184,8 @@ vibe-cinematic-video/
     ├── project-contract.example.json
     ├── RESOURCE_MANIFEST.json
     ├── validation-report.json
+    ├── project-template/
+    ├── examples/
     ├── animation-core/
     ├── styles/
     └── music/
@@ -206,3 +212,25 @@ vibe-cinematic-video/
 仓库代码和制作文档与用户自行加入的音乐、视频、字体、图片分别管理。本发布版不包含原参考音轨或完整成片，也不提供这些第三方资源的再分发授权。
 
 当前未设置仓库代码与文档的 `LICENSE`；维护者可在发布时选择并添加合适的许可证。选择代码许可证时，也应单独说明媒体资源的适用范围。
+
+## 新增：完整工程脚手架
+
+```shell
+node scripts/create-project.mjs /path/to/new-project
+# 独立验证示例（明确使用示例参数与本地合成音乐）
+node scripts/create-project.mjs /path/to/demo-project --demo
+```
+
+进入生成工程，执行 `npm ci` 和 `python -m pip install -r requirements.txt`。完成项目配置与确认稿后，运行 `npm run analyze:music`、`npm run doctor`、`npm run dev`、`npm run stills`、`npm run render`、`npm run check`、`npm run package`。片段渲染使用 `--episode ID --from 起始帧 --to 结束帧`，帧号为绝对分集帧号且两端包含。
+
+新项目默认参数仍为空；`--contract 配置.json` 可导入已完成参数。`--music 音乐路径`优先使用指定曲目；私人版默认音乐仅复制到本次工程，公开包没有该音轨。
+
+脚手架提供统一时间、模型与音频接口、实际文字盒检查、字幕覆盖、完整媒体解码与事件前后帧证据。`qa/report.json`区分技术结果和未完成的人工科学、观看、审听状态。
+
+## 新增：可选 Blender
+
+复杂三维结构、剖切、装配或材质表现需要时按镜头启用。通过 `BLENDER_EXECUTABLE` 或 PATH 指定，不自动安装。默认输出无声视频；透明叠加使用RGBA PNG序列，最终字幕与声音仍由Remotion统一编排。
+
+工程内 `npm run blender:render -- --episode ID --scene ID` 提供简单壳体开合测试；真实题材要单独实现几何和动作，测试场景不能冒充真实科学模型。未安装Blender时基础示例照常可用。
+
+详细说明：[工程脚手架](references/scaffold.md)、[科学镜头设计](references/scientific-shot-design.md)、[Blender接入](references/blender.md)、[方法来源](THIRD_PARTY_NOTICES.md)。

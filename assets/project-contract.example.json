@@ -38,5 +38,6 @@
   "workflow": {
     "sampleOrFull": null,
     "requiredQuestionsAnswered": false
-  }
+  },
+  "episodes": []
 }

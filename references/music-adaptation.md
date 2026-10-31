@@ -2,7 +2,7 @@
 
 ## 默认素材与优先级
 
-用户本次提供或指定的曲目优先；没有换曲则使用assets/defaults.json登记的默认音乐。公开分发版不包含音轨。可选本地默认路径为assets/music/default-reference.m4a，用户应自行提供有权使用的音乐；若缺失则询问用户。完整参考混音不能称为已分离的纯音乐stem。
+用户本次提供或指定的曲目优先；没有换曲则使用assets/defaults.json登记的默认音乐。本Skill默认音乐来自用户此前概率主题参考视频的完整音轨，资产为assets/music/default-reference.m4a，无重编码提取。它不是经过音源分离的纯音乐stem。
 
 默认风格是cinematic-spatial；音乐与风格分别选择。用户可以保留风格换音乐，或保留音乐换风格，不把两者绑死。
 

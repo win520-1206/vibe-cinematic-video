@@ -1,49 +1,91 @@
 {
   "skill": "vibe-cinematic-video",
-  "date": "2026-10-30",
-  "formatValidation": "passed with official quick_validate.py using Python UTF-8 mode",
-  "documentLinks": "passed",
-  "audioScript": [
-    "2-second silence/500Hz tone fixture",
-    "60 frame output at30fps",
-    "finite bounded control values",
-    "invalid fps rejected",
-    "actual120s soundtrack yields3600frames",
-    "CLI success and invalid-input exit code verified"
+  "revision": "runnable-scaffold-optional-blender",
+  "date": "2026-10-31",
+  "formatValidation": "passed with official quick_validate.py in UTF-8 mode",
+  "typecheck": "passed",
+  "unitTests": {
+    "passed": 9,
+    "failed": 0
+  },
+  "standaloneInstall": "npm ci from lock; no source-project node_modules link",
+  "fullRenders": [
+    {
+      "variant": "landscape",
+      "width": 960,
+      "height": 540,
+      "fps": 24,
+      "decodedFrames": 288,
+      "technicalPassed": true
+    },
+    {
+      "variant": "portrait-two-episodes",
+      "width": 360,
+      "height": 640,
+      "fps": 30,
+      "decodedFrames": [
+        36,
+        48
+      ],
+      "technicalPassed": true
+    }
   ],
-  "mediaScript": [
-    "actual1080p30/120s film metadata passed",
-    "intentionally wrong1280 width rejected",
-    "17s cut maps to frame509 then510"
+  "integration": {
+    "passed": true,
+    "checks": [
+      "changed crop rejected",
+      "omitted caption rejected",
+      "source fingerprint changes",
+      "frame 55 -> 0 -> 55 identical PNG"
+    ]
+  },
+  "partialRender": {
+    "sourceStartFrame": 48,
+    "sourceStartSeconds": 2,
+    "bestOffsetSamples": 0,
+    "fittedDecodeGain": 0.7066901846541044,
+    "gainAdjustedRmsError": 0.0001183086084051988,
+    "resetSegmentRmsError": 0.008704527745180417,
+    "passed": true,
+    "note": "Compare timing independently of mono/stereo mix gain and AAC padding; not an unchanged-audio claim."
+  },
+  "additionalChecks": [
+    "nonempty target refused",
+    "empty contract retains unset project parameters",
+    "private default music copied byte-identically",
+    "independent manifest detects missing captions",
+    "event/gap/overlap/asset failures detected",
+    "source/media fingerprint guards stale delivery",
+    "original project unchanged",
+    "project package and SRT exported"
   ],
+  "blender": {
+    "installedDetected": false,
+    "pythonSyntax": "passed",
+    "missingExecutable": "explicit failure; no replacement scene",
+    "realRender": "not_run"
+  },
+  "manualReview": {
+    "representativeStills": "viewed",
+    "continuousViewing": "not_reviewed",
+    "listening": "not_reviewed",
+    "scientificScope": "original pedagogical Bernoulli walk; not measured data"
+  },
   "limitations": [
-    "No new full video rendered for Skill validation",
-    "Metadata helper does not fully decode or visually review video",
-    "No independent subagent evaluation performed",
-    "Animation core is a mechanism example, not a turnkey production."
+    "Blender scene generation requires a real Blender installation and has not been rendered here.",
+    "Automated checks do not establish scientific correctness or full perceptual readability.",
+    "New subjects still require model and scene authoring; the starter is not an automatic film writer.",
+    "No independent subagent evaluation performed."
   ],
-  "revision": "project-neutral-naming",
-  "invocationChecks": [
-    "episodeCount/duration/width/height/fps unset",
-    "no preset title cut or key events",
-    "default music asset present",
-    "extensible style profiles resolve",
-    "current music overrides default"
-  ],
-  "musicStructureTests": [
-    "synthetic120BPM detected",
-    "sustained high-energy fixture located",
-    "silence yields no invented tempo or climax",
-    "actual133s default track decoded and analyzed",
-    "CLI output generated",
-    "all beat/climax outputs labeled candidates, not reviewed musical truth"
-  ],
-  "neutralizationChecks": [
-    "No production-specific names in packaged text or filenames",
-    "Document links resolved",
-    "Config/style registry consistent",
-    "Generic TS/TSX compilation passed",
-    "Two different transition schedules and deterministic geometry tested",
-    "Default music bytes preserved"
-  ]
+  "preview": {
+    "command": "npm run dev",
+    "httpStatus": 200,
+    "compiled": true,
+    "testServerStopped": true
+  },
+  "publicArchive": {
+    "extractedCreateProjectDemo": "passed",
+    "privateMediaIncluded": false,
+    "zipCRC": "passed"
+  }
 }

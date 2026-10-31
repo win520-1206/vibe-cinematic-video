@@ -1,0 +1,10 @@
+node_modules/
+.remotion/
+build/
+qa/
+renders/
+deliveries/
+public/generated/
+__pycache__/
+.env
+*.log
